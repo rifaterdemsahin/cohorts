@@ -59,6 +59,10 @@ a:hover { color: var(--brass); }
   text-transform: uppercase;
 }
 .tagline { font-size: 0.85rem; opacity: 0.7; letter-spacing: 0.03em; text-transform: uppercase; }
+.masthead-nav { display: flex; gap: 18px; font-size: 0.85rem; }
+.masthead-nav a { text-decoration: none; color: var(--ink); opacity: 0.7; font-weight: 600; }
+.masthead-nav a:hover { color: var(--brass); opacity: 1; }
+.masthead-nav a.active { color: var(--brass); opacity: 1; }
 .name-field { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
 .name-field label { opacity: 0.7; }
 .name-field input {
@@ -165,6 +169,49 @@ a:hover { color: var(--brass); }
   background: rgba(178, 126, 51, 0.06);
 }
 [contenteditable="true"]:focus { outline: 2px solid var(--brass); background: rgba(178, 126, 51, 0.12); }
+
+.entry-time {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  opacity: 0.55;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+.entry ul.rules { margin: 0; padding-left: 1.2em; max-width: 62ch; }
+.entry ul.rules li { margin-bottom: 8px; }
+.entry ul.rules li:last-child { margin-bottom: 0; }
+
+/* Serenity prayer panel */
+.prayer-panel {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 4px;
+  padding: 36px 28px;
+  text-align: center;
+  margin: 0 0 48px;
+}
+.prayer-panel .label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 16px;
+}
+.prayer-panel blockquote {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  max-width: 46ch;
+  margin: 0 auto;
+}
 
 /* Closing panel */
 .closing { background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 4px; padding: 32px 28px; margin: 48px 0; }

@@ -16,6 +16,9 @@ Actions workflow in
 - [`index.html`](index.html) — the landing page: a calendar of every call
   date (from `weeks.js`), click a marked day to open that week
 - [`week.html`](week.html) — the single dynamic recap template
+- [`meeting-format.html`](meeting-format.html) — the facilitator's run sheet
+  for the live call: introductions, meeting rules, reading the news,
+  "done & lacking" shares, GitHub medallions, and a closing reading
 
 **📚 Weeks:**
 - [Week 01 — Finding Your Footing in the Agent Era](https://rifaterdemsahin.github.io/cohorts/week.html?week=week-01)
