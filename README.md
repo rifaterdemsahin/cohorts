@@ -1,16 +1,20 @@
 # cohorts
 Delivery pilot cohorts
 
-## Cohort Log
+## 📔 Cohort Log
 
 Weekly recap site for the AI-learning cohort — a static, single-page-per-week
 journal built with plain HTML/CSS/JS (no build step, no framework). Deployed
 via GitHub Pages using the GitHub Actions workflow in
 [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml).
 
-**Live site:** https://rifaterdemsahin.github.io/cohorts/
+**🌐 Live site:** https://rifaterdemsahin.github.io/cohorts/
 
-**Weeks:**
+[`index.html`](index.html) is the landing/archive page — it lists every
+published week (rendered from `weeks.js`) with a link straight to that
+week's recap.
+
+**📚 Weeks:**
 - [Week 01 — Finding Your Footing in the Agent Era](https://rifaterdemsahin.github.io/cohorts/week-01.html)
 
 ### First-time setup

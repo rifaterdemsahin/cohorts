@@ -4,27 +4,232 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cohort Log</title>
-<meta http-equiv="refresh" content="0; url=week-01.html">
-<link rel="canonical" href="week-01.html">
+<link rel="canonical" href="index.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink: #142840; --paper: #F1EEE3; --brass: #B27E33; }
+  :root {
+    --ink: #142840;
+    --paper: #F1EEE3;
+    --brass: #B27E33;
+    --sage: #4E6E56;
+    --rule: #DAD4C2;
+    --paper-raised: #E9E4D4;
+  }
+  * { box-sizing: border-box; }
   html { color-scheme: light; }
   body {
     margin: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: var(--paper);
     color: var(--ink);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    text-align: center;
-    padding: 24px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-  a { color: var(--brass); }
+  h1, h2, .headline { font-family: 'Fraunces', Georgia, serif; font-weight: 600; line-height: 1.15; margin: 0; }
+  a { color: var(--sage); }
+  a:hover { color: var(--brass); }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  .masthead { border-bottom: 1px solid var(--rule); padding: 28px 0 20px; }
+  .masthead .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+  .wordmark { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.25rem; }
+  .wordmark span { color: var(--brass); }
+  .tagline { font-size: 0.85rem; opacity: 0.7; letter-spacing: 0.03em; text-transform: uppercase; }
+
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--rule); }
+  .kicker { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sage); margin-bottom: 14px; }
+  .headline { font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 18px; }
+  .intro { font-size: 1.05rem; max-width: 60ch; opacity: 0.92; }
+
+  .stats { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 28px; }
+  .stat { }
+  .stat .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.6rem; color: var(--brass); }
+  .stat .lbl { font-size: 0.78rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .weeks-section { padding: 48px 0; }
+  .weeks-section h2 { font-size: 1.2rem; margin-bottom: 6px; }
+  .weeks-section .sub { font-size: 0.85rem; opacity: 0.7; margin-bottom: 24px; }
+
+  .week-list { list-style: none; margin: 0; padding: 0; position: relative; }
+  .week-list::before {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--rule);
+  }
+  .week-card {
+    position: relative;
+    padding-left: 68px;
+    margin-bottom: 20px;
+  }
+  .week-badge {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+  }
+  .week-card a {
+    display: block;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .week-card a:hover { border-color: var(--brass); }
+  .week-card .label {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+  .week-card .go {
+    font-size: 0.8rem;
+    color: var(--sage);
+    margin-top: 4px;
+  }
+  .week-card a:hover .go { color: var(--brass); }
+
+  .cta-panel {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 32px 28px;
+    text-align: center;
+    margin: 8px 0 48px;
+  }
+  .cta-panel .emoji-row { font-size: 1.6rem; margin-bottom: 12px; letter-spacing: 6px; }
+  .cta-panel h2 { font-size: 1.25rem; margin-bottom: 10px; }
+  .cta-panel p { max-width: 50ch; margin: 0 auto 20px; opacity: 0.85; font-size: 0.95rem; }
+  .cta-panel a.btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: 3px;
+    text-decoration: none;
+  }
+  .cta-panel a.btn:hover { background: var(--sage); }
+
+  footer.foot { border-top: 1px solid var(--rule); padding: 24px 0 48px; font-size: 0.8rem; opacity: 0.6; text-align: center; }
+
+  @media (max-width: 560px) {
+    .masthead .wrap { flex-direction: column; align-items: flex-start; }
+    .hero { padding: 40px 0 32px; }
+    .week-list::before { left: 21px; }
+    .week-card { padding-left: 50px; }
+    .week-badge { width: 40px; height: 40px; font-size: 1.1rem; }
+    .stats { gap: 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
 </style>
 </head>
 <body>
-  <p>Redirecting to the latest issue of <a href="week-01.html">Cohort Log — Week 01</a>…</p>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="wordmark">📔 Cohort <span>Log</span></div>
+    <div class="tagline">The weekly AI-learning journal</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="kicker">🧵 Welcome</div>
+    <h1 class="headline">One journal, one entry per week</h1>
+    <p class="intro">
+      Every week our AI-learning cohort meets, works through the same
+      seven-part agenda, and this page gets a new entry. Pick a week below to
+      read the recap, leave yourself inline notes as you go 📝, and download
+      or save them when you're done.
+    </p>
+    <div class="stats" id="stats">
+      <div class="stat"><div class="num" id="stat-weeks">—</div><div class="lbl">📚 Weeks published</div></div>
+      <div class="stat"><div class="num">7</div><div class="lbl">🗂️ Agenda items / week</div></div>
+    </div>
+  </section>
+
+  <section class="weeks-section">
+    <h2>📖 All entries</h2>
+    <div class="sub">Newest first — click through to read, take notes, and revisit anytime.</div>
+    <ul class="week-list" id="week-list"></ul>
+  </section>
+
+  <section class="cta-panel">
+    <div class="emoji-row">🤖✨🧭</div>
+    <h2>Not in the cohort yet?</h2>
+    <p>Join the Skool community to get the call link, catch the next live session, and swap notes with the room.</p>
+    <a class="btn" href="https://www.skool.com/" target="_blank" rel="noopener">🔗 Join on Skool</a>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">🖋️ Published one entry at a time — see <a href="weeks.js">weeks.js</a> for the raw archive.</div>
+</footer>
+
+<script src="weeks.js"></script>
+<script>
+(function () {
+  "use strict";
+  var list = document.getElementById("week-list");
+  var statWeeks = document.getElementById("stat-weeks");
+  var badges = ["🌱", "📰", "🎓", "🧭", "🧪", "💬", "🔑", "🚀", "🛠️", "🔭"];
+
+  if (typeof WEEKS !== "undefined" && WEEKS.length) {
+    statWeeks.textContent = WEEKS.length;
+    var ordered = WEEKS.slice().reverse(); // newest first
+    ordered.forEach(function (week, i) {
+      var li = document.createElement("li");
+      li.className = "week-card";
+
+      var badge = document.createElement("div");
+      badge.className = "week-badge";
+      badge.textContent = badges[i % badges.length];
+      badge.setAttribute("aria-hidden", "true");
+      li.appendChild(badge);
+
+      var a = document.createElement("a");
+      a.href = week.url;
+      var labelDiv = document.createElement("div");
+      labelDiv.className = "label";
+      labelDiv.textContent = week.label;
+      var goDiv = document.createElement("div");
+      goDiv.className = "go";
+      goDiv.textContent = "Read this week's recap →";
+      a.appendChild(labelDiv);
+      a.appendChild(goDiv);
+      li.appendChild(a);
+
+      list.appendChild(li);
+    });
+  } else {
+    statWeeks.textContent = "0";
+    list.innerHTML = "<li class=\"week-card\">No weeks published yet.</li>";
+  }
+})();
+</script>
+
 </body>
 </html>

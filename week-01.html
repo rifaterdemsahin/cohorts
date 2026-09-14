@@ -63,6 +63,7 @@
     font-weight: 700;
     font-size: 1.25rem;
     letter-spacing: 0.01em;
+    color: var(--ink);
   }
   .wordmark span { color: var(--brass); }
   .issue-meta {
@@ -357,10 +358,10 @@
 
 <header class="masthead">
   <div class="wrap">
-    <div class="wordmark">Cohort <span>Log</span></div>
-    <div class="issue-meta">Week 01 · Thursday, September 10, 2026</div>
+    <a class="wordmark" href="index.html" style="text-decoration:none;">📔 Cohort <span>Log</span></a>
+    <div class="issue-meta">🗓️ Week 01 · Thursday, September 10, 2026</div>
     <div class="name-field">
-      <label for="reader-name">Your name</label>
+      <label for="reader-name">👋 Your name</label>
       <input type="text" id="reader-name" placeholder="Type here" autocomplete="off">
     </div>
   </div>
@@ -369,7 +370,7 @@
 <main class="wrap">
 
   <section class="hero">
-    <div class="kicker">Session Recap</div>
+    <div class="kicker">🧭 Session Recap</div>
     <h1 class="headline">Finding Your Footing in the Agent Era</h1>
     <p class="intro">
       Our first call was less about tools and more about posture — how to stay
@@ -385,7 +386,7 @@
 
     <li class="entry" data-entry="1">
       <div class="entry-number">01</div>
-      <div class="entry-eyebrow">Introduction &amp; Spirit</div>
+      <div class="entry-eyebrow">🌱 Introduction &amp; Spirit</div>
       <h2>Competence before confidence</h2>
       <p>
         We opened with a round of "what did you actually try this week" —
@@ -401,7 +402,7 @@
         The house rule for the cohort: bring the broken thing, not the
         polished thing. Nobody learns from a demo that already worked.
       </p>
-      <button class="note-toggle" type="button" aria-expanded="false">+ Add a note</button>
+      <button class="note-toggle" type="button" aria-expanded="false">📝 Add a note</button>
       <div class="note-area">
         <textarea placeholder="Your notes on this entry..." aria-label="Notes for entry 1"></textarea>
         <div class="note-status" aria-live="polite"></div>
@@ -410,7 +411,7 @@
 
     <li class="entry" data-entry="2">
       <div class="entry-number">02</div>
-      <div class="entry-eyebrow">Sharing the News</div>
+      <div class="entry-eyebrow">📰 Sharing the News</div>
       <h2>Agents that read the whole repo</h2>
       <p>
         Most of the discussion centered on the newer wave of coding agents
@@ -427,7 +428,7 @@
         one-off prompt box, checking in on long-running work across a
         session instead of restarting context every time.
       </p>
-      <button class="note-toggle" type="button" aria-expanded="false">+ Add a note</button>
+      <button class="note-toggle" type="button" aria-expanded="false">📝 Add a note</button>
       <div class="note-area">
         <textarea placeholder="Your notes on this entry..." aria-label="Notes for entry 2"></textarea>
         <div class="note-status" aria-live="polite"></div>
@@ -436,7 +437,7 @@
 
     <li class="entry" data-entry="3">
       <div class="entry-number">03</div>
-      <div class="entry-eyebrow">Certification Questions</div>
+      <div class="entry-eyebrow">🎓 Certification Questions</div>
       <h2>Is a certificate worth sitting for?</h2>
       <p>
         The question that got the most replies in chat: is it worth paying
@@ -453,7 +454,7 @@
         No firm answer, but a useful frame: treat a certificate as a door
         opener for a specific gatekeeper, not as proof of skill to peers.
       </p>
-      <button class="note-toggle" type="button" aria-expanded="false">+ Add a note</button>
+      <button class="note-toggle" type="button" aria-expanded="false">📝 Add a note</button>
       <div class="note-area">
         <textarea placeholder="Your notes on this entry..." aria-label="Notes for entry 3"></textarea>
         <div class="note-status" aria-live="polite"></div>
@@ -462,7 +463,7 @@
 
     <li class="entry" data-entry="4">
       <div class="entry-number">04</div>
-      <div class="entry-eyebrow">New Role Types &amp; Pathways</div>
+      <div class="entry-eyebrow">🧭 New Role Types &amp; Pathways</div>
       <h2>Titles are catching up to the work</h2>
       <p>
         We compared notes on job postings people had actually seen recently.
@@ -480,7 +481,7 @@
         category — it's an existing role that has absorbed agent fluency as
         a baseline expectation.
       </p>
-      <button class="note-toggle" type="button" aria-expanded="false">+ Add a note</button>
+      <button class="note-toggle" type="button" aria-expanded="false">📝 Add a note</button>
       <div class="note-area">
         <textarea placeholder="Your notes on this entry..." aria-label="Notes for entry 4"></textarea>
         <div class="note-status" aria-live="polite"></div>
@@ -489,7 +490,7 @@
 
     <li class="entry" data-entry="5">
       <div class="entry-number">05</div>
-      <div class="entry-eyebrow">New Practices &amp; Innovations</div>
+      <div class="entry-eyebrow">🧪 New Practices &amp; Innovations</div>
       <h2>Context engineering as its own discipline</h2>
       <p>
         A recurring phrase this week was "context engineering" — treating
@@ -506,7 +507,7 @@
         output has to pass — before trusting it to run unattended on
         anything that touched production data.
       </p>
-      <button class="note-toggle" type="button" aria-expanded="false">+ Add a note</button>
+      <button class="note-toggle" type="button" aria-expanded="false">📝 Add a note</button>
       <div class="note-area">
         <textarea placeholder="Your notes on this entry..." aria-label="Notes for entry 5"></textarea>
         <div class="note-status" aria-live="polite"></div>
@@ -515,7 +516,7 @@
 
     <li class="entry" data-entry="6">
       <div class="entry-number">06</div>
-      <div class="entry-eyebrow">Personal Shares</div>
+      <div class="entry-eyebrow">💬 Personal Shares</div>
       <h2>How it's working (and not) for members</h2>
       <p>
         One member walked us through automating a monthly invoicing routine
@@ -528,7 +529,7 @@
         the same lesson from different directions — the review step isn't
         optional yet, and probably shouldn't be for a while.
       </p>
-      <button class="note-toggle" type="button" aria-expanded="false">+ Add a note</button>
+      <button class="note-toggle" type="button" aria-expanded="false">📝 Add a note</button>
       <div class="note-area">
         <textarea placeholder="Your notes on this entry..." aria-label="Notes for entry 6"></textarea>
         <div class="note-status" aria-live="polite"></div>
@@ -537,7 +538,7 @@
 
     <li class="entry" data-entry="7">
       <div class="entry-number">07</div>
-      <div class="entry-eyebrow">Closing</div>
+      <div class="entry-eyebrow">🔑 Closing</div>
       <h2>What we're carrying into week two</h2>
       <p>
         We closed by asking everyone to name one thing they'd actually try
@@ -548,7 +549,7 @@
         people tried and reviewed carefully than by what any tool claims it
         can do.
       </p>
-      <button class="note-toggle" type="button" aria-expanded="false">+ Add a note</button>
+      <button class="note-toggle" type="button" aria-expanded="false">📝 Add a note</button>
       <div class="note-area">
         <textarea placeholder="Your notes on this entry..." aria-label="Notes for entry 7"></textarea>
         <div class="note-status" aria-live="polite"></div>
@@ -558,39 +559,39 @@
   </ol>
 
   <section class="closing">
-    <h2>Principles for ongoing growth</h2>
+    <h2>🔑 Principles for ongoing growth</h2>
     <div class="sub">Pulled from this week's discussion — not rules, just what held up.</div>
     <ol>
-      <li><strong>Review before you trust.</strong> An agent that makes tests pass isn't the same as an agent that fixes the problem — read the diff.</li>
-      <li><strong>Treat context as a designed artifact.</strong> A standing brief file beats re-explaining your project every session.</li>
-      <li><strong>Let work speak before credentials do.</strong> A small public repo of things you actually built travels further than a certificate, for most rooms.</li>
-      <li><strong>Absorb the skill into the role you have.</strong> The durable pathway right now is fluency added to an existing job, not a brand-new title.</li>
+      <li>🔍 <strong>Review before you trust.</strong> An agent that makes tests pass isn't the same as an agent that fixes the problem — read the diff.</li>
+      <li>🧠 <strong>Treat context as a designed artifact.</strong> A standing brief file beats re-explaining your project every session.</li>
+      <li>🛠️ <strong>Let work speak before credentials do.</strong> A small public repo of things you actually built travels further than a certificate, for most rooms.</li>
+      <li>🌿 <strong>Absorb the skill into the role you have.</strong> The durable pathway right now is fluency added to an existing job, not a brand-new title.</li>
     </ol>
   </section>
 
   <section class="notes-panel">
-    <h2>Your notes from this week</h2>
+    <h2>📓 Your notes from this week</h2>
     <p class="help">
       Everything you typed into the entries above lives in this browser only,
       under your name. Download it as a text file to keep, or save a copy to
       the cohort's shared Azure archive if that's configured for this page.
     </p>
     <div class="notes-actions">
-      <button class="btn btn-primary" id="download-notes" type="button">Download my notes</button>
-      <button class="btn btn-secondary" id="save-azure" type="button">Save to Azure</button>
+      <button class="btn btn-primary" id="download-notes" type="button">⬇️ Download my notes</button>
+      <button class="btn btn-secondary" id="save-azure" type="button">☁️ Save to Azure</button>
       <span class="save-status" id="save-status" aria-live="polite"></span>
     </div>
   </section>
 
   <section class="cta">
-    <a href="https://www.skool.com/" target="_blank" rel="noopener">Not in the cohort yet? Join the Skool community →</a>
+    <a href="https://www.skool.com/" target="_blank" rel="noopener">🔗 Not in the cohort yet? Join the Skool community →</a>
   </section>
 
 </main>
 
 <footer class="archive">
   <div class="wrap">
-    <h3>Archive</h3>
+    <h3>📚 Archive</h3>
     <ul id="archive-list"></ul>
   </div>
 </footer>
@@ -650,25 +651,25 @@
       textarea.value = saved;
       area.classList.add("open");
       toggle.setAttribute("aria-expanded", "true");
-      toggle.textContent = "− Hide note";
+      toggle.textContent = "✕ Hide note";
     }
 
     toggle.addEventListener("click", function () {
       var open = area.classList.toggle("open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      toggle.textContent = open ? "− Hide note" : "+ Add a note";
+      toggle.textContent = open ? "✕ Hide note" : "📝 Add a note";
       if (open) textarea.focus();
     });
 
     var saveTimer;
     textarea.addEventListener("input", function () {
       clearTimeout(saveTimer);
-      status.textContent = "Saving…";
+      status.textContent = "⏳ Saving…";
       saveTimer = setTimeout(function () {
         localStorage.setItem(noteKey(n), textarea.value);
-        status.textContent = "Saved locally";
+        status.textContent = "✅ Saved locally";
         setTimeout(function () {
-          if (status.textContent === "Saved locally") status.textContent = "";
+          if (status.textContent === "✅ Saved locally") status.textContent = "";
         }, 2000);
       }, 400);
     });
@@ -718,7 +719,7 @@
     var statusEl = document.getElementById("save-status");
 
     if (!CONFIG.AZURE_CONTAINER_SAS_URL) {
-      statusEl.textContent = "Azure saving isn't configured for this page.";
+      statusEl.textContent = "⚠️ Azure saving isn't configured for this page.";
       return;
     }
 
@@ -731,7 +732,7 @@
     var parts = CONFIG.AZURE_CONTAINER_SAS_URL.split("?");
     var blobUrl = parts[0].replace(/\/$/, "") + "/" + blobName + "?" + parts[1];
 
-    statusEl.textContent = "Saving…";
+    statusEl.textContent = "⏳ Saving…";
 
     fetch(blobUrl, {
       method: "PUT",
@@ -743,11 +744,11 @@
     })
       .then(function (res) {
         if (!res.ok) throw new Error("Azure responded with " + res.status);
-        statusEl.textContent = "Saved to Azure";
+        statusEl.textContent = "☁️ Saved to Azure";
       })
       .catch(function (err) {
         // Most failures here are CORS — see the CONFIG comment above.
-        statusEl.textContent = "Save failed — check console (likely CORS).";
+        statusEl.textContent = "❌ Save failed — check console (likely CORS).";
         console.error("Save to Azure failed:", err);
       });
   });
