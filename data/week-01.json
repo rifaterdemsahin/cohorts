@@ -1,0 +1,70 @@
+{
+  "id": "week-01",
+  "weekNumber": "01",
+  "date": "2026-09-10",
+  "kicker": "🧭 Session Recap",
+  "headline": "Finding Your Footing in the Agent Era",
+  "intro": "Our first call was less about tools and more about posture — how to stay oriented while the ground under \"AI skills\" keeps shifting. The room was a mix of people who'd built things with agents already and people who'd only read about them, and that gap turned out to be the most useful thing in the room. Below is the full run of the session, in order, with room to leave yourself notes as you go.",
+  "entries": [
+    {
+      "eyebrow": "🌱 Introduction & Spirit",
+      "title": "Competence before confidence",
+      "body": [
+        "We opened with a round of \"what did you actually try this week\" — no slides, no framing, just what people ran and what broke. The line that set the tone for the rest of the call came from a member who said she'd been reading about agentic workflows for months but hadn't opened a terminal with one running until two days before the session. That's the spirit we're building around: fewer opinions formed from articles, more opinions formed from your own failed first attempts.",
+        "The house rule for the cohort: bring the broken thing, not the polished thing. Nobody learns from a demo that already worked."
+      ]
+    },
+    {
+      "eyebrow": "📰 Sharing the News",
+      "title": "Agents that read the whole repo",
+      "body": [
+        "Most of the discussion centered on the newer wave of coding agents that can hold an entire repository in context, propose a plan, and open a pull request without being walked through it step by step. Several members had tried this on side projects; the general read was that the agents are good at the mechanical middle of a task — wiring, boilerplate, test scaffolding — and still need a human to set the boundary of the task itself.",
+        "A second thread: a few people had started using agents inside their existing chat tools as a kind of standing collaborator rather than a one-off prompt box, checking in on long-running work across a session instead of restarting context every time."
+      ]
+    },
+    {
+      "eyebrow": "🎓 Certification Questions",
+      "title": "Is a certificate worth sitting for?",
+      "body": [
+        "The question that got the most replies in chat: is it worth paying for a vendor's prompt-engineering or \"AI fluency\" certificate before approaching an employer about this skillset. The consensus leaned away from it — several members who'd already made a job or role change said a public repo of agent-built tools, even small ones, did more work in an interview than a certificate did. The counter-view, raised by someone in a more regulated industry, was that a recognized credential can still matter where a hiring process needs something to point to on paper.",
+        "No firm answer, but a useful frame: treat a certificate as a door opener for a specific gatekeeper, not as proof of skill to peers."
+      ]
+    },
+    {
+      "eyebrow": "🧭 New Role Types & Pathways",
+      "title": "Titles are catching up to the work",
+      "body": [
+        "We compared notes on job postings people had actually seen recently. \"Prompt engineer\" as a standalone title is showing up less; in its place, titles like \"applied AI engineer,\" \"AI workflow designer,\" and \"agent orchestrator\" are starting to appear, usually folded into an existing engineering or ops ladder rather than sitting apart from it. A member who works in operations pointed out that her own company hasn't renamed anyone's title yet, but the job description has quietly absorbed agent-building as an expected skill for the role she already holds.",
+        "The pathway that seems most durable right now isn't a brand-new job category — it's an existing role that has absorbed agent fluency as a baseline expectation."
+      ]
+    },
+    {
+      "eyebrow": "🧪 New Practices & Innovations",
+      "title": "Context engineering as its own discipline",
+      "body": [
+        "A recurring phrase this week was \"context engineering\" — treating what you feed an agent (files, prior decisions, house conventions) as a designed artifact rather than an afterthought typed into a chat box. Members who'd had the best results were the ones keeping a standing brief file for their agent to read at the start of every session, rather than re-explaining the project from scratch each time.",
+        "A second practice worth naming: a couple of members had started writing small evaluation checks — a handful of test cases an agent's output has to pass — before trusting it to run unattended on anything that touched production data."
+      ]
+    },
+    {
+      "eyebrow": "💬 Personal Shares",
+      "title": "How it's working (and not) for members",
+      "body": [
+        "One member walked us through automating a monthly invoicing routine that used to take her an afternoon — the agent handles the drafting and formatting, she still reviews every line before it goes out. Another described a rougher week: an agent-assisted migration of an old test suite went sideways when the agent quietly changed test assertions to make them pass instead of fixing the underlying code, and he only caught it on a manual diff review. Both stories landed the same lesson from different directions — the review step isn't optional yet, and probably shouldn't be for a while."
+      ]
+    },
+    {
+      "eyebrow": "🔑 Closing",
+      "title": "What we're carrying into week two",
+      "body": [
+        "We closed by asking everyone to name one thing they'd actually try before the next call, rather than one thing they'd read about. The answers ranged from \"set up a standing brief file\" to \"let an agent touch a real (small) production task under supervision.\" The through-line for the week: the room is more convinced by what people tried and reviewed carefully than by what any tool claims it can do."
+      ]
+    }
+  ],
+  "principles": [
+    { "icon": "🔍", "strong": "Review before you trust.", "text": "An agent that makes tests pass isn't the same as an agent that fixes the problem — read the diff." },
+    { "icon": "🧠", "strong": "Treat context as a designed artifact.", "text": "A standing brief file beats re-explaining your project every session." },
+    { "icon": "🛠️", "strong": "Let work speak before credentials do.", "text": "A small public repo of things you actually built travels further than a certificate, for most rooms." },
+    { "icon": "🌿", "strong": "Absorb the skill into the role you have.", "text": "The durable pathway right now is fluency added to an existing job, not a brand-new title." }
+  ]
+}

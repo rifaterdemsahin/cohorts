@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cohort Log</title>
+<link rel="canonical" href="index.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">📔 Cohort <span>Log</span></a>
+    <nav class="masthead-nav">
+      <a href="index.html" class="active">🗓️ Calendar</a>
+      <a href="meeting-format.html">📜 Meeting Format</a>
+    </nav>
+    <div class="tagline">The weekly AI-learning journal</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="kicker">🧵 Welcome</div>
+    <h1 class="headline">One journal, one entry per week</h1>
+    <p class="intro">
+      Every week our AI-learning cohort meets, works through the same
+      seven-part agenda, and this page gets a new entry. Pick a date on the
+      calendar below to read that week's recap, leave yourself inline notes
+      as you go 📝, and download or save them when you're done.
+    </p>
+    <div class="stats">
+      <div class="stat"><div class="num" id="stat-weeks">—</div><div class="lbl">📚 Weeks published</div></div>
+      <div class="stat"><div class="num">7</div><div class="lbl">🗂️ Agenda items / week</div></div>
+    </div>
+  </section>
+
+  <section class="calendar-section">
+    <h2>🗓️ Find a week</h2>
+    <div class="sub">Marked days are call dates — click one to open that week. Use ?week=&lt;id&gt; to link directly to any entry.</div>
+
+    <div class="calendar">
+      <div class="calendar-head">
+        <div class="month-label" id="month-label">—</div>
+        <div class="calendar-nav">
+          <button type="button" id="cal-prev" aria-label="Previous month">← Prev</button>
+          <button type="button" id="cal-today">Today</button>
+          <button type="button" id="cal-next" aria-label="Next month">Next →</button>
+        </div>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+      <div class="calendar-legend"><span class="dot" aria-hidden="true"></span> Cohort call published for that day</div>
+    </div>
+
+    <ul class="calendar-week-list" id="calendar-week-list"></ul>
+  </section>
+
+  <section class="cta-panel">
+    <div class="emoji-row">🤖✨🧭</div>
+    <h2>Not in the cohort yet?</h2>
+    <p>Join the Skool community to get the call link, catch the next live session, and swap notes with the room.</p>
+    <a class="btn btn-primary" href="https://www.skool.com/" target="_blank" rel="noopener">🔗 Join on Skool</a>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">🖋️ Published one entry at a time — see <a href="weeks.js">weeks.js</a> for the raw archive.</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="weeks.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  document.getElementById("stat-weeks").textContent = WEEKS.length;
+
+  // id -> week manifest entry, keyed by "YYYY-MM-DD"
+  var byDateKey = {};
+  WEEKS.forEach(function (w) { byDateKey[w.date] = w; });
+
+  var sorted = WEEKS.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+  var reference = sorted.length ? new Date(sorted[sorted.length - 1].date + "T00:00:00") : new Date();
+  var viewYear = reference.getFullYear();
+  var viewMonth = reference.getMonth(); // 0-indexed
+
+  var monthLabelEl = document.getElementById("month-label");
+  var gridEl = document.getElementById("calendar-grid");
+  var listEl = document.getElementById("calendar-week-list");
+
+  var MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var DOW = ["Su","Mo","Tu","We","Th","Fr","Sa"];
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function render() {
+    monthLabelEl.textContent = MONTH_NAMES[viewMonth] + " " + viewYear;
+    gridEl.innerHTML = "";
+
+    DOW.forEach(function (d) {
+      var el = document.createElement("div");
+      el.className = "dow";
+      el.textContent = d;
+      gridEl.appendChild(el);
+    });
+
+    var firstOfMonth = new Date(viewYear, viewMonth, 1);
+    var startOffset = firstOfMonth.getDay();
+    var daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    var todayKey = formatKey(new Date());
+
+    for (var i = 0; i < startOffset; i++) {
+      var empty = document.createElement("div");
+      empty.className = "calendar-day empty";
+      gridEl.appendChild(empty);
+    }
+
+    for (var day = 1; day <= daysInMonth; day++) {
+      var key = viewYear + "-" + pad(viewMonth + 1) + "-" + pad(day);
+      var week = byDateKey[key];
+      var el = document.createElement(week ? "a" : "div");
+      el.className = "calendar-day" + (week ? " has-week" : "") + (key === todayKey ? " today" : "");
+      el.textContent = String(day);
+      if (week) {
+        el.href = "week.html?week=" + week.id;
+        el.title = week.label;
+      }
+      gridEl.appendChild(el);
+    }
+
+    // Compact list of weeks falling in the visible month (accessible fallback)
+    listEl.innerHTML = "";
+    var inMonth = sorted.filter(function (w) {
+      var d = new Date(w.date + "T00:00:00");
+      return d.getFullYear() === viewYear && d.getMonth() === viewMonth;
+    });
+    if (!inMonth.length) {
+      var none = document.createElement("li");
+      none.textContent = "No calls this month.";
+      listEl.appendChild(none);
+    } else {
+      inMonth.slice().reverse().forEach(function (w) {
+        var li = document.createElement("li");
+        var d = new Date(w.date + "T00:00:00");
+        var dateSpan = document.createElement("span");
+        dateSpan.className = "cw-date";
+        dateSpan.textContent = d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+        var a = document.createElement("a");
+        a.href = "week.html?week=" + w.id;
+        a.textContent = w.label;
+        li.appendChild(dateSpan);
+        li.appendChild(a);
+        listEl.appendChild(li);
+      });
+    }
+  }
+
+  function formatKey(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+
+  document.getElementById("cal-prev").addEventListener("click", function () {
+    viewMonth -= 1;
+    if (viewMonth < 0) { viewMonth = 11; viewYear -= 1; }
+    render();
+  });
+  document.getElementById("cal-next").addEventListener("click", function () {
+    viewMonth += 1;
+    if (viewMonth > 11) { viewMonth = 0; viewYear += 1; }
+    render();
+  });
+  document.getElementById("cal-today").addEventListener("click", function () {
+    var t = new Date();
+    viewYear = t.getFullYear();
+    viewMonth = t.getMonth();
+    render();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
