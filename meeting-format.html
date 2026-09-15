@@ -16,8 +16,10 @@
   <div class="wrap">
     <a class="wordmark" href="index.html">📔 Cohort <span>Log</span></a>
     <nav class="masthead-nav">
+      <a href="whiteboard.html">🖊️ Whiteboard</a>
       <a href="index.html">🗓️ Calendar</a>
       <a href="meeting-format.html" class="active">📜 Meeting Format</a>
+      <a href="badges.html">🏅 Badges</a>
     </nav>
   </div>
 </header>
@@ -29,10 +31,63 @@
     <h1 class="headline">The Weekly Call, Start to Finish</h1>
     <p class="intro">
       Same shape every week, so nobody has to wonder what's coming next.
-      Six segments, roughly 35 minutes, one facilitator running the clock.
+      Six segments, locked to one hour, one facilitator running the clock.
       This page is the run sheet — what happens, in order, and why each
       piece is there.
     </p>
+    <p class="intro"><strong>⏰ Every Sunday, 13:30 UK (London) time.</strong></p>
+  </section>
+
+  <section class="meeting-overview" aria-labelledby="overview-heading">
+    <h2 id="overview-heading" class="visually-hidden">Meeting timeline at a glance</h2>
+    <svg viewBox="0 0 900 220" role="img" aria-label="One-hour meeting timeline: Open and Introductions 5 minutes, Meeting Rules 2 minutes, We Read the News 5 minutes, Done and Lacking 40 minutes, Medallions for Repo Owners 5 minutes, Closing 3 minutes." style="width:100%;height:auto;font-family:'Inter',sans-serif;">
+      <line x1="30" y1="110" x2="870" y2="110" stroke="var(--rule)" stroke-width="2"></line>
+
+      <!-- 01 Open 5min -->
+      <g transform="translate(30,110)">
+        <circle r="7" fill="var(--brass)"></circle>
+        <text x="0" y="-58" text-anchor="middle" font-size="20">👋</text>
+        <text x="0" y="-32" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600">Open</text>
+        <text x="0" y="26" text-anchor="middle" font-size="11" fill="var(--sage)">5 min</text>
+      </g>
+      <!-- 02 Rules 2min -->
+      <g transform="translate(150,110)">
+        <circle r="7" fill="var(--brass)"></circle>
+        <text x="0" y="-58" text-anchor="middle" font-size="20">📏</text>
+        <text x="0" y="-32" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600">Rules</text>
+        <text x="0" y="26" text-anchor="middle" font-size="11" fill="var(--sage)">2 min</text>
+      </g>
+      <!-- 03 News 5min -->
+      <g transform="translate(270,110)">
+        <circle r="7" fill="var(--brass)"></circle>
+        <text x="0" y="-58" text-anchor="middle" font-size="20">📰</text>
+        <text x="0" y="-32" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600">News</text>
+        <text x="0" y="26" text-anchor="middle" font-size="11" fill="var(--sage)">5 min</text>
+      </g>
+      <!-- 04 Done & Lacking 40min — the dominant block -->
+      <g transform="translate(270,110)">
+        <rect x="0" y="-6" width="330" height="12" rx="6" fill="var(--paper-raised)" stroke="var(--brass)" stroke-width="1.5"></rect>
+        <circle cx="330" r="9" fill="var(--ink)"></circle>
+        <text x="165" y="-58" text-anchor="middle" font-size="20">🙌</text>
+        <text x="165" y="-32" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="700">Done &amp; Lacking</text>
+        <text x="165" y="26" text-anchor="middle" font-size="12" fill="var(--brass)" font-weight="600">40 min — the heart of the call</text>
+      </g>
+      <!-- 05 Medallions 5min -->
+      <g transform="translate(720,110)">
+        <circle r="7" fill="var(--brass)"></circle>
+        <text x="0" y="-58" text-anchor="middle" font-size="20">🏅</text>
+        <text x="0" y="-32" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600">Medallions</text>
+        <text x="0" y="26" text-anchor="middle" font-size="11" fill="var(--sage)">5 min</text>
+      </g>
+      <!-- 06 Closing 3min -->
+      <g transform="translate(870,110)">
+        <circle r="7" fill="var(--brass)"></circle>
+        <text x="0" y="-58" text-anchor="middle" font-size="20">🙏</text>
+        <text x="-6" y="-32" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="600">Closing</text>
+        <text x="0" y="26" text-anchor="middle" font-size="11" fill="var(--sage)">3 min</text>
+      </g>
+    </svg>
+    <p class="sub" style="text-align:center;">One hour, six segments, one steady pace — "Done &amp; Lacking" is deliberately the biggest block on the clock.</p>
   </section>
 
   <ol class="spine">
@@ -56,6 +111,7 @@
         for our own learning. So that's where the energy goes: loving the
         difference, and staying positive about it.
       </p>
+      <p class="signup-note">🙋 Who wants to host and open next week's call? Say so in the chat before this call ends.</p>
     </li>
 
     <li class="entry" data-entry="2">
@@ -85,11 +141,12 @@
         tight — this is the door into the discussion, not the discussion
         itself.
       </p>
+      <p class="signup-note">🙋 Who wants to read the news next week? Sign up before this call ends.</p>
     </li>
 
     <li class="entry" data-entry="4">
       <div class="entry-number">04</div>
-      <div class="entry-time">~15 min</div>
+      <div class="entry-time">~40 min</div>
       <div class="entry-eyebrow">🙌 Done &amp; Lacking</div>
       <h2>Both halves, in the same breath</h2>
       <p>
@@ -117,6 +174,7 @@
         on work that's actually out there for someone else to read, fork,
         or borrow from.
       </p>
+      <p class="signup-note">🙋 Who wants to call out the medallions next week? Sign up before this call ends.</p>
     </li>
 
     <li class="entry" data-entry="6">
@@ -146,9 +204,10 @@
     <h2>🧭 Running the call</h2>
     <div class="sub">Notes for whoever's hosting.</div>
     <ol>
-      <li>⏱️ <strong>~35 minutes total.</strong> If the "Done &amp; Lacking" round runs long, trim the news segment first — it's the most compressible.</li>
-      <li>🔁 <strong>Rotate the news reader.</strong> Someone new signs up each week so it's never the same voice twice in a row.</li>
-      <li>🙋 <strong>Keep the round moving.</strong> A soft cap of one to two minutes per person in "Done &amp; Lacking" keeps everyone room to speak.</li>
+      <li>⏱️ <strong>Locked to one hour.</strong> "Done &amp; Lacking" is the biggest block on purpose (~40 min) — if it's running long, trim the news segment first, not the round itself.</li>
+      <li>🔁 <strong>Rotate the volunteer roles.</strong> Host, news reader, and medallion caller — someone new signs up each week for each, so it's never the same voice twice in a row.</li>
+      <li>🙋 <strong>Keep the round moving.</strong> With ~40 minutes for "Done &amp; Lacking," aim for two to three minutes per person so everyone gets a turn.</li>
+      <li>⏰ <strong>Sunday, 13:30 UK time, every week.</strong> Same slot, no rescheduling surprises.</li>
       <li>📓 <strong>Recap goes out after.</strong> The week's page — <a href="index.html">this week's entry</a> — gets published once the call wraps, not during it.</li>
     </ol>
   </section>

@@ -26,6 +26,7 @@
 // Blob layout inside the container:
 //   content/<weekId>.json                  — a week's editable recap content
 //   notes/<weekId>-<reader>-<timestamp>.txt — a reader's downloaded notes
+//   whiteboard.json                         — the one shared whiteboard (whiteboard.html)
 const SITE_CONFIG = {
   AZURE_CONTAINER_SAS_URL: ""
 };

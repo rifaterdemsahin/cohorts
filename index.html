@@ -16,8 +16,10 @@
   <div class="wrap">
     <a class="wordmark" href="index.html">📔 Cohort <span>Log</span></a>
     <nav class="masthead-nav">
+      <a href="whiteboard.html">🖊️ Whiteboard</a>
       <a href="index.html" class="active">🗓️ Calendar</a>
       <a href="meeting-format.html">📜 Meeting Format</a>
+      <a href="badges.html">🏅 Badges</a>
     </nav>
     <div class="tagline">The weekly AI-learning journal</div>
   </div>
@@ -30,34 +32,21 @@
     <h1 class="headline">One journal, one entry per week</h1>
     <p class="intro">
       Every week our AI-learning cohort meets, works through the same
-      seven-part agenda, and this page gets a new entry. Pick a date on the
-      calendar below to read that week's recap, leave yourself inline notes
-      as you go 📝, and download or save them when you're done.
+      seven-part agenda, and this page gets a new entry. Head to the
+      <a href="whiteboard.html">whiteboard</a> to write with the room, or
+      open this week's recap below to read it and leave yourself inline
+      notes as you go 📝.
     </p>
+    <p class="intro"><strong>⏰ Every Sunday, 13:30 UK (London) time.</strong> See the <a href="meeting-format.html">meeting format</a> for the full run sheet.</p>
     <div class="stats">
       <div class="stat"><div class="num" id="stat-weeks">—</div><div class="lbl">📚 Weeks published</div></div>
       <div class="stat"><div class="num">7</div><div class="lbl">🗂️ Agenda items / week</div></div>
     </div>
   </section>
 
-  <section class="calendar-section">
-    <h2>🗓️ Find a week</h2>
-    <div class="sub">Marked days are call dates — click one to open that week. Use ?week=&lt;id&gt; to link directly to any entry.</div>
-
-    <div class="calendar">
-      <div class="calendar-head">
-        <div class="month-label" id="month-label">—</div>
-        <div class="calendar-nav">
-          <button type="button" id="cal-prev" aria-label="Previous month">← Prev</button>
-          <button type="button" id="cal-today">Today</button>
-          <button type="button" id="cal-next" aria-label="Next month">Next →</button>
-        </div>
-      </div>
-      <div class="calendar-grid" id="calendar-grid"></div>
-      <div class="calendar-legend"><span class="dot" aria-hidden="true"></span> Cohort call published for that day</div>
-    </div>
-
-    <ul class="calendar-week-list" id="calendar-week-list"></ul>
+  <section class="current-week-panel" id="current-week-panel" hidden>
+    <div class="label" id="current-week-label">📍 This week</div>
+    <div class="current-week-body" id="current-week-body"></div>
   </section>
 
   <section class="cta-panel">
@@ -81,106 +70,42 @@
 
   document.getElementById("stat-weeks").textContent = WEEKS.length;
 
-  // id -> week manifest entry, keyed by "YYYY-MM-DD"
-  var byDateKey = {};
-  WEEKS.forEach(function (w) { byDateKey[w.date] = w; });
-
   var sorted = WEEKS.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-  var reference = sorted.length ? new Date(sorted[sorted.length - 1].date + "T00:00:00") : new Date();
-  var viewYear = reference.getFullYear();
-  var viewMonth = reference.getMonth(); // 0-indexed
 
-  var monthLabelEl = document.getElementById("month-label");
-  var gridEl = document.getElementById("calendar-grid");
-  var listEl = document.getElementById("calendar-week-list");
+  // --- Current week panel: nearest Sunday 13:30 UK call --------------------
+  (function () {
+    var now = new Date();
+    var thisWeekSunday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
+    var nextWeekSunday = new Date(thisWeekSunday);
+    nextWeekSunday.setDate(thisWeekSunday.getDate() + 7);
 
-  var MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  var DOW = ["Su","Mo","Tu","We","Th","Fr","Sa"];
-
-  function pad(n) { return String(n).padStart(2, "0"); }
-
-  function render() {
-    monthLabelEl.textContent = MONTH_NAMES[viewMonth] + " " + viewYear;
-    gridEl.innerHTML = "";
-
-    DOW.forEach(function (d) {
-      var el = document.createElement("div");
-      el.className = "dow";
-      el.textContent = d;
-      gridEl.appendChild(el);
-    });
-
-    var firstOfMonth = new Date(viewYear, viewMonth, 1);
-    var startOffset = firstOfMonth.getDay();
-    var daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-    var todayKey = formatKey(new Date());
-
-    for (var i = 0; i < startOffset; i++) {
-      var empty = document.createElement("div");
-      empty.className = "calendar-day empty";
-      gridEl.appendChild(empty);
+    function inRange(dateStr, start, end) {
+      var d = new Date(dateStr + "T00:00:00");
+      return d >= start && d <= end;
     }
+    var weekEnd = new Date(thisWeekSunday);
+    weekEnd.setDate(thisWeekSunday.getDate() + 6);
 
-    for (var day = 1; day <= daysInMonth; day++) {
-      var key = viewYear + "-" + pad(viewMonth + 1) + "-" + pad(day);
-      var week = byDateKey[key];
-      var el = document.createElement(week ? "a" : "div");
-      el.className = "calendar-day" + (week ? " has-week" : "") + (key === todayKey ? " today" : "");
-      el.textContent = String(day);
-      if (week) {
-        el.href = "week.html?week=" + week.id;
-        el.title = week.label;
-      }
-      gridEl.appendChild(el);
-    }
+    var current = sorted.filter(function (w) { return inRange(w.date, thisWeekSunday, weekEnd); });
 
-    // Compact list of weeks falling in the visible month (accessible fallback)
-    listEl.innerHTML = "";
-    var inMonth = sorted.filter(function (w) {
-      var d = new Date(w.date + "T00:00:00");
-      return d.getFullYear() === viewYear && d.getMonth() === viewMonth;
-    });
-    if (!inMonth.length) {
-      var none = document.createElement("li");
-      none.textContent = "No calls this month.";
-      listEl.appendChild(none);
+    var panel = document.getElementById("current-week-panel");
+    var body = document.getElementById("current-week-body");
+    var dateFmt = { weekday: "long", month: "short", day: "numeric" };
+
+    if (current.length) {
+      var w = current[current.length - 1];
+      body.innerHTML = "This week's call — " +
+        thisWeekSunday.toLocaleDateString(undefined, dateFmt) + ", 13:30 UK — recap: " +
+        '<a href="week.html?week=' + w.id + '">' + w.label + "</a>";
+      panel.hidden = false;
+    } else if (now < thisWeekSunday || now.getTime() === thisWeekSunday.getTime()) {
+      body.textContent = "Next call: " + thisWeekSunday.toLocaleDateString(undefined, dateFmt) + ", 13:30 UK.";
+      panel.hidden = false;
     } else {
-      inMonth.slice().reverse().forEach(function (w) {
-        var li = document.createElement("li");
-        var d = new Date(w.date + "T00:00:00");
-        var dateSpan = document.createElement("span");
-        dateSpan.className = "cw-date";
-        dateSpan.textContent = d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-        var a = document.createElement("a");
-        a.href = "week.html?week=" + w.id;
-        a.textContent = w.label;
-        li.appendChild(dateSpan);
-        li.appendChild(a);
-        listEl.appendChild(li);
-      });
+      body.textContent = "Next call: " + nextWeekSunday.toLocaleDateString(undefined, dateFmt) + ", 13:30 UK. This week's recap goes up after the call.";
+      panel.hidden = false;
     }
-  }
-
-  function formatKey(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
-
-  document.getElementById("cal-prev").addEventListener("click", function () {
-    viewMonth -= 1;
-    if (viewMonth < 0) { viewMonth = 11; viewYear -= 1; }
-    render();
-  });
-  document.getElementById("cal-next").addEventListener("click", function () {
-    viewMonth += 1;
-    if (viewMonth > 11) { viewMonth = 0; viewYear += 1; }
-    render();
-  });
-  document.getElementById("cal-today").addEventListener("click", function () {
-    var t = new Date();
-    viewYear = t.getFullYear();
-    viewMonth = t.getMonth();
-    render();
-  });
-
-  render();
+  })();
 })();
 </script>
 

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cohort Log — Whiteboard</title>
+<link rel="canonical" href="whiteboard.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="index.html">📔 Cohort <span>Log</span></a>
+    <nav class="masthead-nav">
+      <a href="whiteboard.html" class="active">🖊️ Whiteboard</a>
+      <a href="index.html">🗓️ Calendar</a>
+      <a href="meeting-format.html">📜 Meeting Format</a>
+      <a href="badges.html">🏅 Badges</a>
+    </nav>
+    <div class="name-field">
+      <label for="writer-name">👋 Your name</label>
+      <input type="text" id="writer-name" placeholder="Type here" autocomplete="off">
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="kicker">🖊️ Shared Space</div>
+    <h1 class="headline">One whiteboard, laid out like the call</h1>
+    <p class="intro">
+      Same shape as the <a href="meeting-format.html">meeting format</a> —
+      one section per agenda segment, so whatever you'd say out loud on the
+      call, you can drop in here too: before the call to get organized,
+      during it as a backup to speaking, or after for anyone who missed it.
+    </p>
+  </section>
+
+  <div class="whiteboard-toolbar">
+    <button class="btn btn-secondary" id="refresh-board" type="button">🔄 Refresh</button>
+    <button class="btn btn-primary" id="save-board" type="button">💾 Save &amp; share</button>
+    <span class="save-status" id="board-status" aria-live="polite"></span>
+  </div>
+  <p class="sub" id="board-meta">Loading…</p>
+
+  <ol class="spine" id="board-sections"></ol>
+
+  <p class="sub whiteboard-warning">
+    ⚠️ This is a plain shared scratchpad, not real-time — if two people
+    save around the same time, the later save wins and overwrites the
+    earlier one. Hit Refresh before you save if it's been a while since
+    you loaded the page.
+  </p>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">🖋️ One shared page — see the <a href="index.html">calendar</a> for past recaps.</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // Sections mirror meeting-format.html's agenda — every segment where
+  // someone actually shares something gets a spot. "Meeting Rules" is
+  // left out; it's fixed and nobody contributes to it.
+  var SECTIONS = [
+    { id: "open", n: "01", eyebrow: "👋 Open & Introductions", time: "~5 min", hint: "Your name, and one line on how the week went. Write it ahead if that's easier than saying it cold." },
+    { id: "news", n: "03", eyebrow: "📰 We Read the News", time: "~5 min", hint: "This week's volunteer: drop your two or three headlines/links here before the call." },
+    { id: "done-lacking", n: "04", eyebrow: "🙌 Done & Lacking", time: "~40 min", big: true, hint: "What you actually did this week — and what you're lacking, stuck on, or missing. Both halves." },
+    { id: "medallions", n: "05", eyebrow: "🏅 Medallions for Repo Owners", time: "~5 min", hint: "Pushed to a public repo this week? Drop the link and one line on what it does." },
+    { id: "closing", n: "06", eyebrow: "🙏 Closing", time: "~3 min", hint: "One line on what you're taking with you." }
+  ];
+
+  var NAME_KEY = "cohortlog_name";
+  var DRAFT_KEY = "cohortlog_whiteboard_draft";
+  var nameInput = document.getElementById("writer-name");
+  var statusEl = document.getElementById("board-status");
+  var metaEl = document.getElementById("board-meta");
+  var listEl = document.getElementById("board-sections");
+
+  nameInput.value = localStorage.getItem(NAME_KEY) || "";
+  nameInput.addEventListener("input", function () {
+    localStorage.setItem(NAME_KEY, nameInput.value);
+  });
+
+  // --- Build the section list ---------------------------------------------
+  listEl.innerHTML = "";
+  SECTIONS.forEach(function (s) {
+    var li = document.createElement("li");
+    li.className = "entry";
+    li.innerHTML =
+      '<div class="entry-number">' + s.n + '</div>' +
+      '<div class="entry-time">' + s.time + '</div>' +
+      '<div class="entry-eyebrow">' + s.eyebrow + '</div>' +
+      '<p class="sub" style="margin-bottom:8px;">' + s.hint + '</p>' +
+      '<textarea class="board-text' + (s.big ? " board-text-big" : "") + '" id="board-' + s.id + '" placeholder="Write here…"></textarea>';
+    listEl.appendChild(li);
+  });
+
+  function getTextareas() {
+    var map = {};
+    SECTIONS.forEach(function (s) {
+      map[s.id] = document.getElementById("board-" + s.id);
+    });
+    return map;
+  }
+  var textareas = getTextareas();
+
+  function collectSections() {
+    var out = {};
+    SECTIONS.forEach(function (s) { out[s.id] = textareas[s.id].value; });
+    return out;
+  }
+
+  function applySections(sections) {
+    sections = sections || {};
+    SECTIONS.forEach(function (s) { textareas[s.id].value = sections[s.id] || ""; });
+  }
+
+  var boardUrl = azureBlobUrl("whiteboard.json");
+
+  function formatWhen(iso) {
+    if (!iso) return "never";
+    var d = new Date(iso);
+    return d.toLocaleString(undefined, { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+
+  function load(showStatus) {
+    if (!boardUrl) {
+      metaEl.textContent = "⚠️ Azure isn't configured for this page — see assets/config.js. You can still write below; it'll autosave to this browser only.";
+      var draft = localStorage.getItem(DRAFT_KEY);
+      if (draft) { try { applySections(JSON.parse(draft).sections); } catch (e) {} }
+      return;
+    }
+    if (showStatus) statusEl.textContent = "⏳ Loading…";
+    fetch(boardUrl)
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (data) {
+        if (data) {
+          applySections(data.sections);
+          metaEl.textContent = "Last saved by " + (data.author || "someone") + " — " + formatWhen(data.updatedAt);
+        } else {
+          metaEl.textContent = "Nobody's saved anything here yet — be the first.";
+        }
+        if (showStatus) statusEl.textContent = "";
+      })
+      .catch(function (err) {
+        metaEl.textContent = "⚠️ Couldn't load the shared board (likely CORS) — check console.";
+        console.error("Load whiteboard failed:", err);
+        if (showStatus) statusEl.textContent = "";
+      });
+  }
+
+  // Autosave a local draft so an unsaved edit survives a closed tab.
+  var draftTimer;
+  listEl.addEventListener("input", function () {
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(function () {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ sections: collectSections() }));
+    }, 400);
+  });
+
+  document.getElementById("refresh-board").addEventListener("click", function () {
+    load(true);
+  });
+
+  document.getElementById("save-board").addEventListener("click", function () {
+    var sections = collectSections();
+    if (!boardUrl) {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ sections: sections }));
+      statusEl.textContent = "⚠️ Azure isn't configured — saved to this browser only.";
+      return;
+    }
+    var payload = {
+      sections: sections,
+      author: nameInput.value.trim() || "Unnamed",
+      updatedAt: new Date().toISOString()
+    };
+    statusEl.textContent = "⏳ Saving…";
+    fetch(boardUrl, {
+      method: "PUT",
+      headers: { "x-ms-blob-type": "BlockBlob", "Content-Type": "application/json" },
+      body: JSON.stringify(payload, null, 2)
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Azure responded with " + res.status);
+        localStorage.removeItem(DRAFT_KEY);
+        statusEl.textContent = "☁️ Saved and shared";
+        metaEl.textContent = "Last saved by " + payload.author + " — " + formatWhen(payload.updatedAt);
+        setTimeout(function () {
+          if (statusEl.textContent === "☁️ Saved and shared") statusEl.textContent = "";
+        }, 3000);
+      })
+      .catch(function (err) {
+        statusEl.textContent = "❌ Save failed — check console (likely CORS).";
+        console.error("Save whiteboard failed:", err);
+      });
+  });
+
+  load(false);
+})();
+</script>
+
+</body>
+</html>
